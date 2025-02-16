@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <textarea
+      id="text"
+      cols="100"
+      rows="5"
+      placeholder="please add source here"
+    ></textarea>
+    <div>
+      <button onclick="addSource()" id="addSource">Add Source</button>
+      <button onclick="checkDuplicate()" id="checkDuplicate">
+        Check Duplicate
+      </button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th><input onkeyup="filterColor()" type="text" id="name" /></th>
+          <th><input onkeyup="filterColor()" type="text" id="light" /></th>
+          <th><input onkeyup="filterColor()" type="text" id="dark" /></th>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <th>Light</th>
+          <th>Dark</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </body>
+</html>

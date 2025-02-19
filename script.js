@@ -1,10 +1,12 @@
 if (getData()) {
   display(getData());
-  document.querySelector("#addSource").innerHTML = "Change Source";
+  document.querySelector("#addSource").innerHTML = "Change Source";
   document.querySelector("#checkDuplicate").style.display = "inline-block";
+  document.querySelector("#resetFilter").style.display = "inline-block";
 } else {
-  document.querySelector("#addSource").innerHTML = "Add Source";
+  document.querySelector("#addSource").innerHTML = "Add Source";
   document.querySelector("#checkDuplicate").style.display = "none";
+  document.querySelector("#resetFilter").style.display = "none";
 }
 
 function addSource() {
@@ -14,12 +16,10 @@ function addSource() {
     display(getData());
     return;
   }
-
   if (!text && !getData()) {
-    window.alert("please add source!!");
+    window.alert("please add source!!");
     return;
   }
-
   const arrayStr = text.split("{");
   const generalArray = reFormatColorArray(arrayStr[0]);
   generalArray.pop();
@@ -38,7 +38,7 @@ function addSource() {
     summaryTheme.push({
       name: general.name,
       light: general.color,
-      dark: "Both as one",
+      dark: "Both as one",
     });
   });
 
@@ -55,7 +55,7 @@ function addSource() {
       summaryTheme.push({
         name: light.name,
         light: light.color,
-        dark: "No Color",
+        dark: "No Color",
       });
     }
   });
@@ -63,25 +63,26 @@ function addSource() {
   darkArray.map((dark) => {
     summaryTheme.push({
       name: dark.name,
-      light: "No Color",
+      light: "No Color",
       dark: dark.color,
     });
   });
   setData(summaryTheme);
   let data = getData();
   display(data);
-  document.querySelector("#addSource").innerHTML = "Change Source";
+  document.querySelector("#addSource").innerHTML = "Change Source";
   document.querySelector("#checkDuplicate").style.display = "inline-block";
+  document.querySelector("#resetFilter").style.display = "inline-block";
 }
 
 function reFormatColorArray(colorArr) {
   colorArr = colorArr
     .split(";")
     .filter((e) => e)
-    .map((e) => e.replace("  ", "").replaceAll("\n", ""));
+    .map((e) => e.replace("  ", "").replaceAll("\n", ""));
   let result = [];
   colorArr.map((color) => {
-    const colorArrEle = color.split(": ");
+    const colorArrEle = color.split(": ");
     result.push({
       name: colorArrEle[0],
       color: colorArrEle[1],
@@ -92,7 +93,7 @@ function reFormatColorArray(colorArr) {
 
 function display(data) {
   data = data.map((e) => {
-    return `<tr><td><button onclick="copy(event,'${e.name}')">Copy</button>${e.name}</td><td>${e.light}</td><td>${e.dark}</td></tr>`;
+    return `<tr><td><button onclick="copy(event,'${e.name}')">Copy</button>${e.name}</td><td>${e.light}</td><td>${e.dark}</td></tr>`;
   });
   const str = data.join("");
   document.querySelector("tbody").innerHTML = str;
@@ -101,6 +102,10 @@ function display(data) {
 function copy(event, value) {
   event.target.innerHTML = "Copied";
   event.target.style.background = "#b3ebb3";
+  if (value.includes("--")) {
+    navigator.clipboard.writeText("var(" + value + ")");
+    return;
+  }
   navigator.clipboard.writeText(value);
 }
 
@@ -119,16 +124,18 @@ function filterColor() {
 
   if (byName) {
     data = data.filter((e, i) => {
-      return e.name.toLowerCase().includes(byName);
+      return e.name.toLowerCase().includes(byName.toLowerCase());
     });
   }
   if (byLight) {
     data = data.filter((e) => {
-      return e.light.toLowerCase().includes(byLight);
+      return e.light.toLowerCase().includes(byLight.toLowerCase());
     });
   }
   if (byDark) {
-    data = data.filter((e) => e.dark.toLowerCase().includes(byDark));
+    data = data.filter((e) =>
+      e.dark.toLowerCase().includes(byDark.toLowerCase())
+    );
   }
   display(data);
 }
@@ -147,7 +154,7 @@ function subColor(data) {
       const name = e.color.replace("var(", "").replace(")", "");
       const found = arr.find((e) => e.name === name);
       if (!found) {
-        e.color += "---Not found";
+        e.color += "---Not found";
         return e;
       }
       e.color += "---" + found.color;
@@ -192,11 +199,20 @@ function displayForCheckDuplicate(data) {
   data = data.map((e) => {
     let subStr = e.map(
       (k) =>
-        `<tr><td><button onclick="copy(event,'${k.name}')">Copy</button>${k.name}</td><td>${k.light}</td><td>${k.dark}</td></tr>`
+        `<tr><td><button onclick="copy(event,'${k.name}')">Copy</button>${k.name}</td><td>${k.light}</td><td>${k.dark}</td></tr>`
     );
     subStr += `<tr><td>===</td><td>===</td><td>===</td></tr>`;
     return subStr.replaceAll("</tr>,", "</tr>");
   });
   const str = data.join("");
   document.querySelector("tbody").innerHTML = str;
+}
+
+function resetFilter() {
+  document.querySelector("#name").value = "";
+  document.querySelector("#light").value = "";
+  document.querySelector("#dark").value = "";
+  let data = getData();
+  if (!data) return;
+  display(data);
 }

@@ -1,87 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      
     <meta charset="UTF-8" />
-      
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      
-    <title>Color Management v2</title>
-      
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Management v2</title>
     <script src="./script.js" defer></script>
-      
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-      
     <textarea
       id="text"
       cols="100"
       rows="5"
-      placeholder="Source is the content of the file _variables.scss"
+      placeholder="Source is the content of the file _variables.scss"
     ></textarea>
-      
     <div>
-            
-      <button onclick="addSource()" id="addSource">Add Source</button>       
+      <button onclick="addSource()" id="addSource">Add Source</button>
       <button onclick="checkDuplicate()" id="checkDuplicate">
-        Check Duplicate
+        Check Duplicate
       </button>
-            
-      <button onclick="resetFilter()" id="resetFilter">Reset Filter</button>   
+
+      <button onclick="resetFilter()" id="resetFilter">Reset Filter</button>
     </div>
-      
+
     <table>
-            
       <thead>
-                  
         <tr>
-                        
           <th>
             <input
-              placeholder="Search by name"
+              placeholder="Search by name"
               onkeyup="filterColor()"
               type="text"
               id="name"
             />
           </th>
-                        
+
           <th>
             <input
-              placeholder="Search by light color"
+              placeholder="Search by light color"
               onkeyup="filterColor()"
               type="text"
               id="light"
             />
           </th>
-                        
+
           <th>
             <input
-              placeholder="Search by dark color"
+              placeholder="Search by dark color"
               onkeyup="filterColor()"
               type="text"
               id="dark"
             />
           </th>
-                    
         </tr>
-                  
         <tr>
-                        
           <th>Name</th>
-                        
           <th>Light</th>
-                        
           <th>Dark</th>
-                    
         </tr>
-              
       </thead>
-            
-      <tbody>
-                        
-      </tbody>
-        
+      <tbody></tbody>
     </table>
   </body>
 </html>

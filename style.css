@@ -18,3 +18,9 @@ td {
 #checkDuplicate {
   margin: 12px;
 }
+
+button {
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+}

@@ -70,9 +70,19 @@ function addSource() {
   setData(summaryTheme);
   let data = getData();
   display(data);
-  document.querySelector("#addSource").innerHTML = "Change  Source";
+  saveSourceSuccessfully();
   document.querySelector("#checkDuplicate").style.display = "inline-block";
   document.querySelector("#resetFilter").style.display = "inline-block";
+}
+
+function saveSourceSuccessfully() {
+  document.querySelector("#addSource").innerHTML = "Saved";
+  document.querySelector("#addSource").style.background = "#b3ebb3";
+
+  const timeoutId = setTimeout(() => {
+    document.querySelector("#addSource").innerHTML = "Change Source";
+    document.querySelector("#addSource").style.background = "buttonface";
+  }, 1000);
 }
 
 function reFormatColorArray(colorArr) {
@@ -103,7 +113,7 @@ function copy(event, value) {
   event.target.innerHTML = "Copied";
   event.target.style.background = "#b3ebb3";
   if (value.includes("--")) {
-    navigator.clipboard.writeText("var(" + value.replaceAll(' ', '') + ")");
+    navigator.clipboard.writeText("var(" + value.replaceAll(" ", "") + ")");
     return;
   }
   navigator.clipboard.writeText(value);

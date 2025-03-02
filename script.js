@@ -77,11 +77,9 @@ function addSource() {
 
 function saveSourceSuccessfully() {
   document.querySelector("#addSource").innerHTML = "Saved";
-  document.querySelector("#addSource").style.background = "#b3ebb3";
 
   setTimeout(() => {
     document.querySelector("#addSource").innerHTML = "Change Source";
-    document.querySelector("#addSource").style.background = "#75fff2";
   }, 1000);
 }
 

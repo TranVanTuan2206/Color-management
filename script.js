@@ -79,9 +79,9 @@ function saveSourceSuccessfully() {
   document.querySelector("#addSource").innerHTML = "Saved";
   document.querySelector("#addSource").style.background = "#b3ebb3";
 
-  const timeoutId = setTimeout(() => {
+  setTimeout(() => {
     document.querySelector("#addSource").innerHTML = "Change Source";
-    document.querySelector("#addSource").style.background = "buttonface";
+    document.querySelector("#addSource").style.background = "#75fff2";
   }, 1000);
 }
 
@@ -89,7 +89,7 @@ function reFormatColorArray(colorArr) {
   colorArr = colorArr
     .split(";")
     .filter((e) => e)
-    .map((e) => e.replace("    ", "").replaceAll("\n", ""));
+    .map((e) => e.replace("  ", "").replaceAll("\n", ""));
   let result = [];
   colorArr.map((color) => {
     const colorArrEle = color.split(": ");
@@ -112,18 +112,18 @@ function display(data) {
 function copy(event, value) {
   event.target.innerHTML = "Copied";
   event.target.style.background = "#b3ebb3";
-  if (value.includes("--")) {
-    navigator.clipboard.writeText("var(" + value.replaceAll(" ", "") + ")");
-    return;
-  }
   navigator.clipboard.writeText(value);
+  setTimeout(() => {
+    event.target.innerHTML = "Copy";
+    event.target.style.background = "#75fff2";
+  }, 1000);
 }
 
 function filterColor() {
   let data = getData();
-  let byName = document.querySelector("#name").value;
-  let byLight = document.querySelector("#light").value;
-  let byDark = document.querySelector("#dark").value;
+  let byName = document.querySelector("#name").value.trim();
+  let byLight = document.querySelector("#light").value.trim();
+  let byDark = document.querySelector("#dark").value.trim();
 
   if (!byName && !byLight && !byDark) {
     let data = getData();
